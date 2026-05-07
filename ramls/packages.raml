@@ -1,0 +1,312 @@
+#%RAML 1.0
+title: mod-kb-ebsco-java
+baseUri: https://github.com/folio-org/mod-kb-ebsco-java
+protocols: [ HTTPS ]
+version: v1
+mediaType: "application/vnd.api+json"
+
+documentation:
+  - title: mod-kb-ebsco-java
+    content: Implements the eholdings interface using EBSCO KB as backend.
+
+traits:
+  queriable: !include traits/queriable.raml
+  sortable: !include traits/sortable.raml
+  pageable: !include traits/pageable.raml
+  filterable: !include traits/filterable.raml
+  taggable: !include traits/taggable.raml
+  accessible: !include traits/accessible.raml
+  packageResourcesFilterable: !include traits/packageResourcesFilterable.raml
+
+types:
+  packageCollection: !include types/packages/packageCollection.json
+  packagePostRequest: !include types/packages/packagePostRequest.json
+  packagePutRequest: !include types/packages/packagePutRequest.json
+  packageTagsPutRequest: !include types/packages/packageTagsPutRequest.json
+  package: !include types/packages/package.json
+  packageTags: !include types/packages/packageTags.json
+  resourceCollection: !include types/resources/resourceCollection.json
+  packagePostBulkFetchRequest: !include types/packages/packagePostBulkFetchRequest.json
+  packageBulkFetchCollection:  !include types/packages/packageBulkFetchCollection.json
+  jsonapiError: !include types/jsonapiError.json
+
+/eholdings/packages:
+  displayName: Packages
+  get:
+    description: Retrieve a collection of packages based on the search query.
+    is: [queriable, filterable, taggable, accessible,
+    sortable: {defaultValue: 'relevance', possibleValues: 'name, relevance'},
+    pageable: {maxCountValue: 100, defaultCountValue: 25}]
+    queryParameters:
+      filter[custom]:
+        displayName: Custom Packages List
+        type: string
+        description: |
+          Filter to get list of custom packages
+          Possible values are
+            - true
+        example: "true"
+        required: false
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: |
+              An array of packages comprising the results of the query.
+              The array will be paged if its length exceeds the value set with the `count` query param, or the default `count` of 25 in its stead.
+              The included metadata gives us the total result count outside of the paged context.
+            type: packageCollection
+            example:
+              strict: false
+              value: !include examples/packages/packages_get_200_response.json
+      400:
+        description: Bad Request
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/packages/packages_get_400_response.json
+  post:
+    description: Create a custom package
+    headers:
+      Content-Type:
+        example: application/vnd.api+json
+    body:
+      application/vnd.api+json:
+        description: Create a custom package
+        type: packagePostRequest
+        example:
+          strict: false
+          value: !include examples/packages/packages_post_request.json
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: The server has successfully fulfilled the POST request.
+            type: package
+            example:
+              strict: false
+              value: !include examples/packages/packages_post_200_response.json
+      400:
+        description: Bad Request
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/packages/packages_post_400_response.json
+      422:
+        description: Unprocessable Entity
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/packages/packages_post_422_response.json
+  /{packageId}:
+    displayName: Get package by package Id
+    description: Instance of a package given packageId
+    uriParameters:
+        packageId:
+          description: identifier of the package formed from Provider Id and Package Id (see example)
+          type: string
+          example: 583-4345
+    get:
+      description: |
+        Retrieve a specific package given packageId.
+        Note that packageId is providerId-packageId
+      queryParameters:
+        include:
+          displayName: Nested resources or provider
+          type: string
+          description: |
+            Include resources or provider in response
+            Possible values are
+              - resources
+              - provider
+          example: resources
+          required: false
+      responses:
+        200:
+          description: OK
+          body:
+            application/vnd.api+json:
+              description: Package details from KB for a given package Id.
+              type: package
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_get_200_response.json
+        400:
+          description: Bad Request
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_get_400_response.json
+        404:
+          description: Not Found
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_get_404_response.json
+    put:
+      description: |
+        Update a managed or custom package using packageId
+        Note that packageId is providerId-packageId
+      headers:
+        Content-Type:
+          example: application/vnd.api+json
+      body:
+        application/vnd.api+json:
+          type: packagePutRequest
+          example:
+            strict: false
+            value: !include examples/packages/packages_put_request.json
+      responses:
+        200:
+          description: OK
+          body:
+            application/vnd.api+json:
+              description: The server has successfully fulfilled the PUT request.
+              type: package
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_put_200_response.json
+        400:
+          description: Bad Request
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_put_400_response.json
+        404:
+          description: Not Found
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_put_404_response.json
+        422:
+          description: Unprocessable Entity
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_put_422_response.json
+    delete:
+      description: |
+        Delete a specific custom package using packageId.
+        Note that packageId is providerId-packageId
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/packages/packages_packageId_delete_400_response.json
+    /resources:
+      get:
+        description: Include all resources belonging to a specific package
+        is: [taggable, accessible, packageResourcesFilterable,
+        sortable: {defaultValue: 'relevance', possibleValues: 'name, relevance'},
+        pageable: {maxCountValue: 100, defaultCountValue: 25}]
+        responses:
+          200:
+            description: OK
+            body:
+              application/vnd.api+json:
+                description: All resources belonging to a specific package
+                type: resourceCollection
+                example:
+                  strict: false
+                  value: !include examples/packages/packages_packageId_resources_get_200_response.json
+          400:
+            description: Bad Request
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/packages/packages_packageId_resources_get_400_response.json
+          404:
+            description: Not Found
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/packages/packages_packageId_resources_get_404_response.json
+    /tags:
+      put:
+        description: Update tags assigned to package
+        headers:
+          Content-Type:
+            example: application/vnd.api+json
+        body:
+          application/vnd.api+json:
+            type: packageTagsPutRequest
+            example:
+              strict: false
+              value: !include examples/packages/package_tags_put_request.json
+        responses:
+          200:
+            description: OK
+            body:
+              application/vnd.api+json:
+                description: Updated list of tags
+                type: packageTags
+                example:
+                  strict: false
+                  value: !include examples/packages/package_tags_put_200_response.json
+          422:
+            description: Unprocessable Entity
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/packages/packages_post_422_response.json
+  /bulk/fetch:
+      post:
+        description:
+        headers:
+          Content-Type:
+            example: application/vnd.api+json
+        body:
+          application/vnd.api+json:
+            type: packagePostBulkFetchRequest
+            example:
+              strict: false
+              value:  !include examples/packages/packages_bulk_fetch_post_request.json
+        responses:
+          200:
+            description: OK
+            body:
+              application/vnd.api+json:
+                description:
+                type: packageBulkFetchCollection
+                example:
+                  strict: false
+                  value: !include examples/packages/packages_bulk_fetch_post_200_response.json
+          422:
+            description: Unprocessable Entity
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/packages/packages_bulk_fetch_post_422_response.json
+

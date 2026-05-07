@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Attributes object schema in titles collection",
+  "description": "Attributes object schema in titles collection",
+  "javaType": "org.folio.rest.jaxrs.model.TitleCollectionItemDataAttributes",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "identifiers": {
+      "type": "array",
+      "description": "List of title identifiers",
+      "items": {
+        "type": "object",
+        "description": "The Identifiers Schema",
+        "$ref": "../identifier.json"
+      }
+    },
+    "isTitleCustom": {
+      "type": "boolean",
+      "description": "Defines if the title is custom",
+      "example": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Title name",
+      "example": "A call to action: Changing the culture of drinking at U.S. colleges"
+    },
+    "publicationType": {
+      "type": "string",
+      "description": "Type of publication",
+      "$ref": "../publicationType.json"
+    },
+    "publisherName": {
+      "type": "string",
+      "description": "Publisher name",
+      "example": "Elsevier"
+    },
+    "subjects": {
+      "type": "array",
+      "description": "List of title subjects",
+      "items": {
+        "type": "object",
+        "description": "List of title subjects",
+        "$ref": "../subject.json"
+      }
+    },
+    "contributors": {
+      "type": "array",
+      "description": "List of contributors",
+      "items": {
+        "type": "object",
+        "description": "The contributor's schema",
+        "$ref": "../contributor.json"
+      }
+    },
+    "alternateTitles": {
+      "type": "array",
+      "description": "List of alternate titles",
+      "items": {
+        "type": "object",
+        "description": "Alternate Title Schema",
+        "$ref": "../alternateTitle.json"
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "description": "Displays title relationships",
+      "$ref": "../relationships.json"
+    }
+  }
+}

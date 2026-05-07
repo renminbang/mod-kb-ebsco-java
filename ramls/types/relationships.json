@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Metadata of relationships for a given object",
+  "description": "Metadata of relationships for a given object",
+  "javaType": "org.folio.rest.jaxrs.model.Relationships",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "packages": {
+      "type": "object",
+      "description": "Relationship of packages for a given object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "packages Data Information",
+          "items": {
+            "type": "object",
+            "description": "Resources Data",
+            "$ref": "relationshipData.json"
+          }
+        },
+        "meta": {
+          "type": "object",
+          "description": "Meta information",
+          "$ref": "included.json"
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Relationship of resources for a given object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "Resources Data Information",
+          "items": {
+            "type": "object",
+            "description": "Resources Data",
+            "$ref": "relationshipData.json"
+          }
+        },
+        "meta": {
+          "type": "object",
+          "description": "Meta information",
+          "$ref": "included.json"
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "description": "Relationship of provider for a given object",
+      "$ref": "metaIncluded.json"
+    }
+  }
+}

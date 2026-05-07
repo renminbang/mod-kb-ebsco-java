@@ -1,0 +1,125 @@
+#%RAML 1.0
+title: mod-kb-ebsco-java
+baseUri: https://github.com/folio-org/mod-kb-ebsco-java
+protocols: [ HTTPS ]
+version: v1
+mediaType: "application/vnd.api+json"
+
+documentation:
+  - title: mod-kb-ebsco-java
+    content: Implements the eholdings interface using EBSCO KB as backend.
+
+types:
+  configurationStatus: !include types/status/status.json
+  holdingsLoadingStatus: !include types/loadHoldings/loadingHoldingsStatus.json
+  jsonapiError: !include types/jsonapiError.json
+
+/eholdings/status:
+  displayName: Status
+  description: Gives status of currently set KB configuration.
+  get:
+    description: Gives status of currently set KB configuration.
+    responses:
+      200:
+        body:
+          application/vnd.api+json:
+            description: Status of currently set KB configuration.
+            type: configurationStatus
+            example:
+              strict: false
+              value: !include examples/status/status_get_200_response.json
+      500:
+        description: "Internal server error"
+        body:
+          text/plain:
+            example: "Internal server error, contact administrator"
+/eholdings/cache:
+  displayName: Cache
+  delete:
+    description: |
+      Invalidate configuration cache for tenant
+    responses:
+      204:
+        description: No Content
+
+/eholdings/loading/kb-credentials:
+  displayName: Run load holdings job
+  post:
+    description: Run load holdings job.
+    headers:
+      Content-Type:
+        example: application/json
+    responses:
+      204:
+        description: No Content
+      409:
+        description: "Process of loading holdings is already running"
+        body:
+          text/plain:
+            example: "Process of loading holdings is already running"
+      500:
+        description: "Internal server error"
+        body:
+          text/plain:
+            example: "Internal server error, contact administrator"
+  /{id}:
+    displayName: Run load holdings for provided credentials id
+    uriParameters:
+      id:
+        pattern : "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    post:
+      description: Run load holdings job by credentials id.
+      headers:
+        Content-Type:
+          example: application/json
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
+          body:
+            application/vnd.api+json:
+              type: jsonapiError
+              example:
+                strict: false
+                value: !include examples/loadHoldings/load-holdings-by-id-post-404-response.json
+        409:
+          description: "Process of loading holdings is already running"
+          body:
+            text/plain:
+              example: "Process of loading holdings is already running"
+        500:
+          description: "Internal server error"
+          body:
+            text/plain:
+              example: "Internal server error, contact administrator"
+    /status:
+      displayName: Get current status of load holdings job.
+      get:
+        description: Get current status of load holdings job.
+        headers:
+          Content-Type:
+            example: application/json
+        responses:
+          200:
+            body:
+              application/json:
+                description: Get current status of load holdings job.
+                type: holdingsLoadingStatus
+                example:
+                  strict: false
+                  value: !include examples/loadHoldings/loading_completed_200_response.json
+          404:
+            description: Not Found
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/loadHoldings/load-holdings-by-id-post-404-response.json
+          500:
+            description: "Internal server error"
+            body:
+              text/plain:
+                example: "Internal server error, contact administrator"
+

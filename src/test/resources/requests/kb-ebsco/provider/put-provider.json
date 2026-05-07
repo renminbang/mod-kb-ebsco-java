@@ -1,0 +1,19 @@
+{
+  "data": {
+    "id": "19",
+    "type": "providers",
+    "attributes": {
+      "packagesSelected": 19,
+      "providerToken": {
+        "factName": "[[galesiteid]]",
+        "prompt": "/itweb/",
+        "helpText": "<ul><li>Enter site id</li></ul>",
+        "value": "My Test Token"
+      },
+      "proxy": {
+        "id": "<n>",
+        "inherited": false
+      }
+    }
+  }
+}

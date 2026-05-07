@@ -1,0 +1,130 @@
+{
+  "titleId": 1108525,
+  "titleName": "\"Great Satan\" Vs. the \"Mad Mullahs\": How the United States and Iran Demonize Each Other",
+  "publisherName": "Praeger",
+  "identifiersList": [
+    {
+      "id": "38624",
+      "source": "ResourceIdentifier",
+      "subtype": 0,
+      "type": 7
+    },
+    {
+      "id": "978-0-585-24731-1",
+      "source": "ResourceIdentifier",
+      "subtype": 2,
+      "type": 1
+    }
+  ],
+  "subjectsList": [
+    {
+      "type": "BISAC",
+      "subject": "SOCIAL SCIENCE \/ Ethnic Studies \/ General"
+    }
+  ],
+  "alternateTitleList": [
+    {
+      "alternateTitle": "Boston Coll Law Rev",
+      "titleType": "Abbreviated"
+    }
+  ],
+  "isTitleCustom": false,
+  "pubType": "Book",
+  "customerResourcesList": [
+    {
+      "titleId": 1108525,
+      "packageId": 3964,
+      "packageName": "EBSCO eBooks",
+      "packageType": "Selectable",
+      "proxy": {
+        "id": "EZProxy",
+        "inherited": true
+      },
+      "isPackageCustom": false,
+      "vendorId": 19,
+      "vendorName": "EBSCO",
+      "locationId": 3464602,
+      "isSelected": true,
+      "isTokenNeeded": false,
+      "visibilityData": {
+        "isHidden": false,
+        "reason": ""
+      },
+      "managedCoverageList": [
+        {
+          "beginCoverage": "1996-01-01",
+          "endCoverage": "1996-12-31"
+        }
+      ],
+      "customCoverageList": [
+
+      ],
+      "coverageStatement": null,
+      "managedEmbargoPeriod": {
+        "embargoUnit": null,
+        "embargoValue": 0
+      },
+      "customEmbargoPeriod": {
+        "embargoUnit": null,
+        "embargoValue": 0
+      },
+      "url": "http:\/\/search.ebscohost.com\/login.aspx?direct=true&scope=site&db=nlebk&db=nlabk&AN=38624",
+      "userDefinedField1": "test 1",
+      "userDefinedField2": "test 2",
+      "userDefinedField3": "",
+      "userDefinedField4": null,
+      "userDefinedField5": "test 5"
+    },
+    {
+      "titleId": 1108525,
+      "packageId": 18,
+      "packageName": "Other package",
+      "packageType": "Selectable",
+      "proxy": {
+        "id": "EZProxy",
+        "inherited": true
+      },
+      "isPackageCustom": false,
+      "vendorId": 22,
+      "vendorName": "BestVendor",
+      "isSelected": true,
+      "isTokenNeeded": false,
+      "visibilityData": {
+        "isHidden": false,
+        "reason": ""
+      },
+      "managedCoverageList": [
+        {
+          "beginCoverage": "1996-01-01",
+          "endCoverage": "1996-12-31"
+        }
+      ],
+      "customCoverageList": [
+
+      ],
+      "coverageStatement": null,
+      "managedEmbargoPeriod": {
+        "embargoUnit": null,
+        "embargoValue": 0
+      },
+      "customEmbargoPeriod": {
+        "embargoUnit": null,
+        "embargoValue": 0
+      },
+      "userDefinedField1": "test 1",
+      "userDefinedField2": "test 2",
+      "userDefinedField3": "",
+      "userDefinedField4": null,
+      "userDefinedField5": "test 5"
+    }
+  ],
+  "description": null,
+  "edition": null,
+  "isPeerReviewed": false,
+  "contributorsList": [
+    {
+      "type": "author",
+      "contributor": "Beeman, William O."
+    }
+  ]
+}

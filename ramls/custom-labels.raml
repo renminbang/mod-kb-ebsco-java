@@ -1,0 +1,95 @@
+#%RAML 1.0
+title: mod-kb-ebsco-java
+baseUri: https://github.com/folio-org/mod-kb-ebsco-java
+protocols: [ HTTPS ]
+version: v1
+mediaType: "application/vnd.api+json"
+
+documentation:
+  - title: mod-kb-ebsco-java
+    content: Implements the eholdings interface using EBSCO KB as backend.
+
+types:
+  customLabelsCollection: !include types/customLabels/customLabelsCollection.json
+  customLabelsPutRequest: !include types/customLabels/customLabelsPutRequest.json
+  jsonapiError: !include types/jsonapiError.json
+
+/eholdings/custom-labels:
+  displayName: Custom Labels
+  get:
+    description: Get a list of custom labels.
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: List of Custom Labels available.
+            type: customLabelsCollection
+            example:
+              strict: false
+              value: !include examples/customLabels/custom_labels_get_200_response.json
+      500:
+        description: "Internal server error"
+        body:
+          text/plain:
+            example: "Internal server error, contact administrator"
+/eholdings/kb-credentials/{id}/custom-labels:
+  displayName: Custom labels
+  description: Custom labels belongs to specific KB Credentials
+  uriParameters:
+    id:
+      pattern : "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+  get:
+    description: Get a custom labels related to specific KB credentials
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: Collection of Custom Labels
+            type: customLabelsCollection
+            example:
+              strict: false
+              value: !include examples/customLabels/custom_labels_get_200_response.json
+      404:
+        description: Not Found
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/customLabels/custom_labels_get_404_response.json
+  put:
+    description: Update a list of custom labels.
+    body:
+      application/vnd.api+json:
+        type: customLabelsPutRequest
+        example:
+          strict: false
+          value: !include examples/customLabels/cl_collection_put_request.json
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: The server has successfully fulfilled the PUT request.
+            type: customLabelsCollection
+            example:
+              strict: false
+              value: !include examples/customLabels/cl_collection_put_200_response.json
+      404:
+        description: Not Found
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/customLabels/custom_labels_get_404_response.json
+      422:
+        description: Unprocessable Entity
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/customLabels/cl_collection_put_422_response.json

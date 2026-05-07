@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Package or provider id are invalid"
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

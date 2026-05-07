@@ -1,0 +1,38 @@
+{
+  "data": [
+    {
+      "id": "proxy-1",
+      "type": "proxyTypes",
+      "credentialsId": "12312312-1231-1231-a111-111111111111",
+      "attributes": {
+        "id": "proxy-1",
+        "name": "",
+        "urlMask": ""
+      }
+    },
+    {
+      "id": "proxy-2",
+      "type": "proxyTypes",
+      "credentialsId": "12312312-1231-1231-a111-111111111111",
+      "attributes": {
+        "id": "proxy-2",
+        "name": "proxy-name-2",
+        "urlMask": "http://url2.edu/"
+      }
+    },
+    {
+      "id": "proxy-3",
+      "type": "proxyTypes",
+      "credentialsId": "12312312-1231-1231-a111-111111111111",
+      "attributes": {
+        "id": "proxy-3"
+      }
+    }
+  ],
+  "meta": {
+    "totalResults": 3
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

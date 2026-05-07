@@ -1,0 +1,99 @@
+{
+  "data": [
+    {
+      "id": "1108525",
+      "type": "titles",
+      "attributes": {
+        "identifiers": [
+          {
+            "id": "978-0-585-24731-1",
+            "subtype": "Online",
+            "type": "ISBN"
+          }
+        ],
+        "isTitleCustom": false,
+        "name": "\"Great Satan\" Vs. the \"Mad Mullahs\": How the United States and Iran Demonize Each Other",
+        "publicationType": "Book",
+        "publisherName": "Praeger",
+        "subjects": [
+          {
+            "subject": "SOCIAL SCIENCE / Ethnic Studies / General",
+            "type": "BISAC"
+          }
+        ],
+        "contributors": [
+          {
+            "type": "author",
+            "contributor": "Beeman, William O."
+          }
+        ],
+        "alternateTitles": [
+          {
+            "alternateTitle": "Boston Coll Law Rev",
+            "titleType": "Abbreviated"
+          }
+        ],
+        "relationships": {
+          "resources": {
+            "meta": {
+              "included": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "762169",
+      "type": "titles",
+      "attributes": {
+        "identifiers": [
+          {
+            "id": "978-0-7910-3651-8",
+            "subtype": "Print",
+            "type": "ISBN"
+          },
+          {
+            "id": "978-0-585-24731-1",
+            "subtype": "Online",
+            "type": "ISBN"
+          }
+        ],
+        "isTitleCustom": false,
+        "name": "F. Scott Fitzgerald's The Great Gatsby (Great Gatsby)",
+        "publicationType": "Book",
+        "publisherName": "Chelsea House Publishers",
+        "subjects": [
+          {
+            "subject": "LITERARY CRITICISM / American / General",
+            "type": "BISAC"
+          }
+        ],
+        "contributors": [
+          {
+            "type": "author",
+            "contributor": "Bloom, Harold"
+          }
+        ],
+        "alternateTitles": [
+          {
+            "alternateTitle": "Boston Coll Law Rev",
+            "titleType": "Abbreviated"
+          }
+        ],
+        "relationships": {
+          "resources": {
+            "meta": {
+              "included": false
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "totalResults": 2
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

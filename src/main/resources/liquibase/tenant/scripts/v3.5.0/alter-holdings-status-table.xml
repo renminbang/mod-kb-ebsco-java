@@ -1,0 +1,95 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+  <changeSet id="MODKBEKBJ-444@@disable-holdings-status-audit-trigger" author="dmtkachenko">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="true">
+        SELECT ${database.defaultSchemaName}.trigger_exist_for_table('holdings_status_audit', 'holdings_status');
+      </sqlCheck>
+    </preConditions>
+    <sql>
+      ALTER TABLE ${database.defaultSchemaName}.holdings_status DISABLE TRIGGER holdings_status_audit;
+    </sql>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@disable-update-started-date-before-insertion-trigger" author="dmtkachenko">
+    <sql>
+      ALTER TABLE ${database.defaultSchemaName}.holdings_status DISABLE TRIGGER update_started_date_before_insertion_trigger;
+    </sql>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@alter-holdings-status-table" author="dmtkachenko">
+    <addColumn tableName="holdings_status">
+      <column name="credentials_id" type="uuid"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444-datamigration@@set-credentials-id-in-holdings-status" author="dmtkachenko">
+    <update tableName="holdings_status">
+      <column name="credentials_id" valueComputed="${database.defaultSchemaName}.get_single_credentials_id()"/>
+    </update>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@add-not-null-constraints-to-holdings-status" author="dmtkachenko">
+    <addNotNullConstraint tableName="holdings_status" columnName="credentials_id"/>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@drop-old-holdings-status-lock-constraint" author="dmtkachenko">
+    <preConditions onFail="MARK_RAN" onFailMessage="[WARN] Unique constraint doesn't exist: holdings_status_lock_key">
+      <sqlCheck  expectedResult="1">
+        SELECT COUNT(1) from pg_constraint
+          WHERE conname = 'holdings_status_lock_key'
+            AND contype = 'u'
+            AND conrelid = '${database.defaultSchemaName}.holdings_status'::regclass;
+      </sqlCheck>
+    </preConditions>
+
+    <dropUniqueConstraint tableName="holdings_status" constraintName="holdings_status_lock_key"
+                          schemaName="${database.defaultSchemaName}"/>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@add-unique-constraint-for-credentialsid-lock-in-holdings-status" author="dmtkachenko">
+    <addUniqueConstraint
+      constraintName="unq_holdings_status_credentialsid_lock"
+      tableName="holdings_status"
+      columnNames="credentials_id, lock"
+      schemaName="${database.defaultSchemaName}"
+      deferrable="false"/>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@add-foreign-key-from-holdings-status-to-kb-credentials" author="dmtkachenko">
+    <addForeignKeyConstraint
+      baseColumnNames="credentials_id"
+      baseTableName="holdings_status"
+      baseTableSchemaName="${database.defaultSchemaName}"
+      constraintName="fk_holdings_status_kb_credentials"
+      deferrable="false"
+      initiallyDeferred="false"
+      onDelete="CASCADE"
+      onUpdate="RESTRICT"
+      referencedColumnNames="id"
+      referencedTableName="kb_credentials"
+      referencedTableSchemaName="${database.defaultSchemaName}"/>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@enable-holdings-status-audit-trigger" author="dmtkachenko">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="true">
+        SELECT ${database.defaultSchemaName}.trigger_exist_for_table('holdings_status_audit', 'holdings_status');
+      </sqlCheck>
+    </preConditions>
+    <sql>
+      ALTER TABLE ${database.defaultSchemaName}.holdings_status ENABLE TRIGGER holdings_status_audit;
+    </sql>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-444@@enable-update-started-date-before-insertion-trigger" author="dmtkachenko">
+    <sql>
+      ALTER TABLE ${database.defaultSchemaName}.holdings_status ENABLE TRIGGER update_started_date_before_insertion_trigger;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

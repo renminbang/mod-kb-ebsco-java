@@ -1,0 +1,43 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+  <changeSet id="MODKBEKBJ-444@@remove-duplicate-check-on-access-types-mappings" author="dmtkachenko">
+    <sql>
+      ALTER TABLE ${database.defaultSchemaName}.access_types_mappings
+        DROP CONSTRAINT IF EXISTS access_types_mapping_record_type_check;
+    </sql>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-452@@rename-access-types-mappings-primary-key" author="dmtkachenko">
+    <preConditions onFail="MARK_RAN">
+      <!--DOESN'T WORK: -->
+      <!--<primaryKeyExists primaryKeyName="access_types_mapping_pkey" tableName="access_types_mappings"
+                        schemaName="${database.defaultSchemaName}"/>-->
+      <sqlCheck expectedResult="1">
+        SELECT count(1) FROM pg_constraint
+          WHERE conname = 'access_types_mapping_pkey'
+            AND contype = 'p'
+            AND conrelid = '${database.defaultSchemaName}.access_types_mappings'::regclass;
+      </sqlCheck>
+    </preConditions>
+
+    <dropPrimaryKey
+      constraintName="access_types_mapping_pkey"
+      tableName="access_types_mappings"
+      schemaName="${database.defaultSchemaName}"/>
+
+    <addPrimaryKey
+      constraintName="access_types_mappings_pkey"
+      tableName="access_types_mappings"
+      columnNames="id"
+      schemaName="${database.defaultSchemaName}"/>
+  </changeSet>
+
+  <changeSet id="MODKBEKBJ-452@@add-not-null-to-record-type-in-access-types-mappings" author="dmtkachenko">
+    <addNotNullConstraint tableName="access_types_mappings" columnName="record_type"/>
+  </changeSet>
+
+</databaseChangeLog>

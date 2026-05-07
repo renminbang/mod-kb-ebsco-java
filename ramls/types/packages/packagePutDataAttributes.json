@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Package Put Data attributes schema",
+  "description": "Package Put Data attributes schema",
+  "javaType": "org.folio.rest.jaxrs.model.PackagePutDataAttributes",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "description": "Content Type of Package",
+      "$ref" : "contentTypeEnum.json",
+      "example": "Online Reference"
+    },
+    "accessTypeId": {
+      "type": "string",
+      "description": "Access type id",
+      "$ref": "../../raml-util/schemas/uuid.schema",
+      "example": "f973c3b6-85fc-4d35-bda8-f31b568957bf"
+    },
+    "customCoverage": {
+      "type": "object",
+      "description": "Custom Coverage",
+      "$ref": "../coverage.json"
+    },
+    "isCustom": {
+      "type": "boolean",
+      "description": "Whether this package is custom or not",
+      "example": false
+    },
+    "isSelected": {
+      "type": "boolean",
+      "description": "Whether this package is selected or not",
+      "example": false
+    },
+    "isFullPackage": {
+      "type": "boolean",
+      "description": "Whether this package is partially selected or not",
+      "example": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Package name",
+      "example": "Shenbao"
+    },
+    "visibilityData": {
+      "type": "object",
+      "description": "Visibility data",
+      "$ref": "../visibilityData.json"
+    },
+    "allowKbToAddTitles": {
+      "type": "boolean",
+      "description": "Allow KB to add titles",
+      "example": true
+    },
+    "packageToken": {
+      "type": "object",
+      "description": "Package Token",
+      "$ref": "../token.json"
+    },
+    "proxy": {
+      "type": "object",
+      "description": "Proxy",
+      "$ref": "../proxy.json"
+    }
+  }
+}

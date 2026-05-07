@@ -1,0 +1,124 @@
+#%RAML 1.0
+title: mod-kb-ebsco-java
+baseUri: https://github.com/folio-org/mod-kb-ebsco-java
+version: v1
+mediaType: "application/vnd.api+json"
+
+traits:
+  sortable: !include traits/sortable.raml
+  pageable: !include traits/pageable.raml
+  filterable: !include traits/titlesFilterable.raml
+  taggable: !include traits/taggable.raml
+  accessible: !include traits/accessible.raml
+  includable: !include traits/includeResources.raml
+
+types:
+  title: !include types/titles/title.json
+  titleCollection: !include types/titles/titleCollection.json
+  titlePostRequest: !include types/titles/titlePostRequest.json
+  titlePutRequest: !include types/titles/titlePutRequest.json
+  jsonapiError: !include types/jsonapiError.json
+
+/eholdings/titles:
+  displayName: Titles
+  description: Collection of available titles in eholdings.
+  get:
+    description: Get a set of titles matching the given search criteria.
+    is: [taggable, accessible, filterable, includable,
+    sortable: {defaultValue: 'relevance', possibleValues: 'name, relevance'},
+    pageable: {maxCountValue: 100, defaultCountValue: 25}]
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: |
+              An array of titles comprising the results of the query.
+              The array will be paged if its length exceeds the value set with the `count` query param, or the default `count` of 25 in its stead.
+              The included metadata gives us the total result count outside of the paged context.
+            type: titleCollection
+            example:
+              strict: false
+              value: !include examples/titles/titles_get_200_response.json
+  post:
+    description: Create a new Custom Title.
+    headers:
+      Content-Type:
+        example: application/vnd.api+json
+    body:
+      application/vnd.api+json:
+        description: Create a new Custom Title.
+        type: titlePostRequest
+        example:
+          strict: false
+          value: !include examples/titles/titles_post_request.json
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: The server has successfully fulfilled the POST request.
+            type: title
+            example:
+              strict: false
+              value: !include examples/titles/titles_post_200_response.json
+      400:
+        description: Bad Request
+        body:
+          application/vnd.api+json:
+            type: jsonapiError
+            example:
+              strict: false
+              value: !include examples/packages/packages_post_400_response.json
+      422:
+        description: Bad
+        body:
+          application/vnd.api+json:
+            example: !include examples/titles/titles_post_422_response.json
+  /{titleId}:
+    description: Entity representing a title
+    get:
+      description: Get the title by its unique identifier.
+      is: [includable]
+      responses:
+        200:
+          description: OK
+          body:
+            application/vnd.api+json:
+              description: EPKB data for the title matching {title_id}.
+              type: title
+              example:
+                strict: false
+                value: !include examples/titles/titles_titleId_get_200_response.json
+        404:
+          description: Not Found
+          body:
+            application/vnd.api+json:
+              example: !include examples/titles/titles_titleId_get_404_response.json
+    put:
+      description: Update Custom Title.
+      headers:
+        Content-Type:
+          example: application/vnd.api+json
+      body:
+        application/vnd.api+json:
+          description: Update Custom Title.
+          type: titlePutRequest
+          example:
+            strict: false
+            value: !include examples/titles/titles_put_request.json
+      responses:
+        200:
+          description: OK
+          body:
+            application/vnd.api+json:
+              description: The server has successfully fulfilled the PUT request.
+              type: title
+              example:
+                strict: false
+                value: !include examples/titles/titles_put_200_response.json
+        422:
+          description: Unprocessable Entity
+          body:
+            application/vnd.api+json:
+              example: !include examples/titles/titles_post_422_response.json

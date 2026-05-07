@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Title attributes schema",
+  "description": "Title attributes schema",
+  "type": "object",
+  "javaType": "org.folio.rest.jaxrs.model.TitleAttributes",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Title name",
+      "example": "A call to action: Changing the culture of drinking at U.S. colleges"
+    },
+    "publisherName": {
+      "type": "string",
+      "description": "Publisher name",
+      "example": "Elsevier"
+    },
+    "isTitleCustom": {
+      "type": "boolean",
+      "description": "Defines if the title is custom",
+      "example": false
+    },
+    "hasSelectedResources": {
+      "type": "boolean",
+      "description": "Indicate that the title has selected resources",
+      "example": true
+    },
+    "subjects": {
+      "type": "array",
+      "description": "List of title subjects",
+      "items": {
+        "type": "object",
+        "$ref": "../subject.json"
+      }
+    },
+    "identifiers": {
+      "type": "array",
+      "description": "List of title identifiers",
+      "items": {
+        "type": "object",
+        "description": "The Identifiers Schema",
+        "$ref": "../identifier.json"
+      }
+    },
+    "publicationType": {
+      "type": "string",
+      "description": "Type of publication",
+      "$ref": "../publicationType.json"
+    },
+    "edition": {
+      "type": "string",
+      "description": "The Edition Schema",
+      "example": "Second edition"
+    },
+    "description": {
+      "type": "string",
+      "description": "The Description Schema",
+      "example": "Provides information about all areas of American Studies."
+    },
+    "isPeerReviewed": {
+      "type": "boolean",
+      "description": "Defines if peer reviewed",
+      "example": false
+    },
+    "contributors": {
+      "type": "array",
+      "description": "The Contributors Schema",
+      "items": {
+        "type": "object",
+        "description": "The Contributors Schema",
+        "$ref": "../contributor.json"
+      }
+    },
+    "alternateTitles": {
+      "type": "array",
+      "description": "List of alternate titles",
+      "items": {
+        "type": "object",
+        "description": "Alternate Title Schema",
+        "$ref": "../alternateTitle.json"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "description": "Title tags",
+      "$ref": "../../raml-util/schemas/tags.schema"
+    }
+  },
+  "required": [
+    "name",
+    "publicationType"
+  ]
+}
+
+

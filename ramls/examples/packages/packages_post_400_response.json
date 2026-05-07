@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Custom Package with the provided name already exists"
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

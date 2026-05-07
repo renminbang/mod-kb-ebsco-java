@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Root Proxy Data Attributes Schema",
+  "description": "Root Proxy Data Attributes",
+  "javaType": "org.folio.rest.jaxrs.model.RootProxyDataAttributes",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Root Proxy ID",
+      "enum": ["root-proxy"],
+      "example": "root-proxy"
+    },
+    "proxyTypeId": {
+      "type": "string",
+      "description": "Proxy Type Id",
+      "example": "EZProxy"
+    }
+  },
+  "required": [
+    "id",
+    "proxyTypeId"
+  ]
+}

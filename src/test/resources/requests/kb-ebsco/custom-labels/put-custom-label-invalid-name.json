@@ -1,0 +1,13 @@
+{
+  "data": [
+    {
+      "type": "customLabels",
+      "attributes": {
+        "id": 1,
+        "displayLabel": "Lorem ipsum dolor sit amet, consectetuer adipiscin.",
+        "displayOnFullTextFinder": false,
+        "displayOnPublicationFinder": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+#%RAML 1.0
+title: mod-kb-ebsco-java
+baseUri: https://github.com/folio-org/mod-kb-ebsco-java
+protocols: [ HTTPS ]
+version: v1
+mediaType: "application/vnd.api+json"
+
+documentation:
+  - title: mod-kb-ebsco-java
+    content: Implements the eholdings interface using EBSCO KB as backend.
+
+types:
+  providerCollection: !include types/providers/providerCollection.json
+  providerPutRequest: !include types/providers/providerPutRequest.json
+  providerTags: !include types/providers/providerTags.json
+  providerTagsPutRequest: !include types/providers/providerTagsPutRequest.json
+  provider: !include types/providers/provider.json
+  packageCollection: !include types/packages/packageCollection.json
+  jsonapiError: !include types/jsonapiError.json
+
+traits:
+  queriable: !include traits/queriable.raml
+  sortable: !include traits/sortable.raml
+  pageable: !include traits/pageable.raml
+  filterable: !include traits/filterable.raml
+  taggable: !include traits/taggable.raml
+  accessible: !include traits/accessible.raml
+  includable: !include traits/includePackages.raml
+
+/eholdings/providers:
+  displayName: Providers
+  description: Collection of available providers in eholdings.
+  get:
+    description: Get a list of providers based on the search query.
+    is: [queriable, taggable,
+    sortable: {defaultValue: 'relevance', possibleValues: 'name, relevance'},
+    pageable: {maxCountValue: 100, defaultCountValue: 25}]
+    responses:
+      200:
+        description: OK
+        body:
+          application/vnd.api+json:
+            description: List of providers matching the provider name and the total number of providers found.
+            type: providerCollection
+            example:
+              strict: false
+              value: !include examples/providers/providers_get_200_response.json
+  /{providerId}:
+    displayName: Get provider by provider Id
+    description: Instance of a provider given providerId
+    uriParameters:
+      providerId:
+        description: Provider Id of provider to get
+        type: string
+    get:
+      description: Get provider given providerId
+      is: [includable]
+      responses:
+        200:
+          description: OK
+          body:
+            application/vnd.api+json:
+              description: Provider details from KB for a given provider Id.
+              type: provider
+              example:
+                strict: false
+                value: !include examples/providers/providers_providerId_get_200_response.json
+        404:
+          description: Not Found
+          body:
+            application/vnd.api+json:
+              description: Provider details not found.
+              example:
+                strict: false
+                value: !include examples/providers/providers_providerId_404_response.json
+    put:
+      description: |
+        Update proxy and token information for a given provider Id.
+      headers:
+        Content-Type:
+          example: application/vnd.api+json
+      body:
+        application/vnd.api+json:
+          type: providerPutRequest
+          example:
+            strict: false
+            value: !include examples/providers/providers_providerId_put_request.json
+      responses:
+        200:
+          description: OK
+          body:
+            application/vnd.api+json:
+              description: The server has successfully fulfilled the PUT request.
+              type: provider
+              example:
+                strict: false
+                value: !include examples/providers/providers_providerId_put_200_response.json
+    /tags:
+      put:
+        description: Update tags assigned to provider
+        headers:
+          Content-Type:
+            example: application/vnd.api+json
+        body:
+          application/vnd.api+json:
+            type: providerTagsPutRequest
+            example:
+              strict: false
+              value: !include examples/providers/providers_tags_put_request.json
+        responses:
+          200:
+            description: OK
+            body:
+              application/vnd.api+json:
+                description: Updated list of tags
+                type: providerTags
+                example:
+                  strict: false
+                  value: !include examples/providers/providers_tags_put_200_response.json
+          422:
+            description: Unprocessable Entity
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/providers/providers_tags_put_422_response.json
+    /packages:
+      get:
+        description: Search within a list of packages associated with a given provider.
+        is: [queriable, taggable, accessible, filterable,
+        sortable: {defaultValue: 'relevance', possibleValues: 'name, relevance'},
+        pageable: {maxCountValue: 100, defaultCountValue: 25}]
+        responses:
+          200:
+            description: OK
+            body:
+              application/vnd.api+json:
+                description: List of packages associated with a given provider matching search criteria.
+                type: packageCollection
+                example:
+                  strict: false
+                  value: !include examples/providers/providers_providerId_packages_get_200_response.json
+          400:
+            description: Bad Request
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/providers/providers_providerId_packages_get_400_response.json
+          404:
+            description: Not Found
+            body:
+              application/vnd.api+json:
+                type: jsonapiError
+                example:
+                  strict: false
+                  value: !include examples/providers/providers_providerId_packages_get_404_response.json

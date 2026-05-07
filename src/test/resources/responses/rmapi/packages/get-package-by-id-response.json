@@ -1,0 +1,27 @@
+{
+  "packageId": 3964,
+  "packageName": "EBSCO Biotechnology Collection: India",
+  "isCustom": false,
+  "vendorId": 19,
+  "vendorName": "EBSCO",
+  "titleCount": 156,
+  "isSelected": false,
+  "visibilityData": {
+    "isHidden": false,
+    "reason": ""
+  },
+  "selectedCount": 0,
+  "isTokenNeeded": false,
+  "contentType": "AggregatedFullText",
+  "customCoverage": {
+    "beginCoverage": "",
+    "endCoverage": ""
+  },
+  "proxy": {
+    "id": "<n>",
+    "inherited": true
+  },
+  "allowEbscoToAddTitles": false,
+  "packageToken": null,
+  "packageType": "Complete"
+}

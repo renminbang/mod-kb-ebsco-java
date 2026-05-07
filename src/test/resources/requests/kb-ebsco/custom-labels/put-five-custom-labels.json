@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "type": "customLabels",
+      "attributes": {
+        "id": 1,
+        "displayLabel": "test label 1",
+        "displayOnFullTextFinder": false,
+        "displayOnPublicationFinder": true
+      }
+    },
+    {
+      "type": "customLabels",
+      "attributes": {
+        "id": 2,
+        "displayLabel": "test label 2",
+        "displayOnFullTextFinder": false,
+        "displayOnPublicationFinder": true
+      }
+    },
+    {
+      "type": "customLabels",
+      "attributes": {
+        "id": 3,
+        "displayLabel": "test label 3",
+        "displayOnFullTextFinder": false,
+        "displayOnPublicationFinder": true
+      }
+    },
+    {
+      "type": "customLabels",
+      "attributes": {
+        "id": 4,
+        "displayLabel": "test label 4",
+        "displayOnFullTextFinder": false,
+        "displayOnPublicationFinder": true
+      }
+    },
+    {
+      "type": "customLabels",
+      "attributes": {
+        "id": 5,
+        "displayLabel": "test label 5",
+        "displayOnFullTextFinder": false,
+        "displayOnPublicationFinder": true
+      }
+    }
+  ]
+}

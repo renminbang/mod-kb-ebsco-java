@@ -1,0 +1,15 @@
+{
+  "proxy": {
+    "id": "<n>"
+  },
+  "vendorId": "19",
+  "ftfTokens": [],
+  "labels": [
+    {
+      "id": 1,
+      "displayLabel": "test",
+      "displayOnFullTextFinder": false,
+      "displayOnPublicationFinder": false
+    }
+  ]
+}

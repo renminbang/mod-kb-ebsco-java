@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Contributor object schema",
+  "description": "Contributor object schema",
+  "type": "object",
+  "javaType": "org.folio.rest.jaxrs.model.Contributors",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of contributor. Valid values are Author, Illustrator, and Editor.",
+      "example": "Author"
+    },
+    "contributor": {
+      "type": "string",
+      "description": "Contributor Name",
+      "example": "Havard, Margaret"
+    }
+  }
+}
